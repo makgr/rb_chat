@@ -1,4 +1,4 @@
-package com.example.rb_chat
+package com.rbchatapp.app
 
 import io.flutter.embedding.android.FlutterActivity
 
