@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "965369654495",
+    "project_id": "rbchatapp-a3710",
+    "storage_bucket": "rbchatapp-a3710.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965369654495:android:cf7fbf26f383bffbb6cd6a",
+        "android_client_info": {
+          "package_name": "com.rbchatapp.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBhSq23TssJiorn_cKEG8FNLWVg91B7M8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
