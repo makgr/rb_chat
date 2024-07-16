@@ -19,7 +19,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Text("RB chat app"),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        useMaterial3: true,
+        fontFamily: "Poppins",
+      ),
+      home: Scaffold(body: Center(child: Text("RB chat app"))),
     );
   }
 }
