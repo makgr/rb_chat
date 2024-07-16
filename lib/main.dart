@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:rb_chat/screens/splash_screen.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -24,7 +25,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
         fontFamily: "Poppins",
       ),
-      home: Scaffold(body: Center(child: Text("RB chat app"))),
+      home: SplashScreen(),
     );
   }
 }
