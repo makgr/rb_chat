@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rb_chat/screens/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,6 +14,18 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
+      ),
+      body: Column(
+        children: [
+          Text("Don't have an account?"),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return SignupScreen();
+                }));
+              },
+              child: Text("Signup Now")),
+        ],
       ),
     );
   }
