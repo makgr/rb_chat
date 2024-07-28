@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 import '../screens/dashboard_screen.dart';
 
-class SignupController {
-  static Future<void> createAccount(
+class LoginController {
+  static Future<void> login(
       {required BuildContext context,
       required String email,
       required String password}) async {
     try {
       await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+          .signInWithEmailAndPassword(email: email, password: password);
 
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
@@ -18,7 +18,7 @@ class SignupController {
       }), (route) {
         return false;
       });
-      print("Account created successfully.");
+      print("Logged in successfully.");
     } catch (e) {
       SnackBar messageSnackBar = SnackBar(
         content: Text(e.toString()),

@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rb_chat/controllers/signup_controller.dart';
-import 'package:rb_chat/screens/dashboard_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -66,7 +64,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ElevatedButton(
                 onPressed: () {
                   if (userForm.currentState!.validate()) {
-                    signupController.createAccount(
+                    SignupController.createAccount(
                         context: context,
                         email: email.text,
                         password: password.text);
