@@ -18,61 +18,81 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign Up"),
+        title: Text(""),
       ),
       body: Form(
         key: userForm,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              TextFormField(
-                controller: email,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Email is required.";
-                  }
-                  return null;
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                decoration: InputDecoration(
-                  label: Text("Email"),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 150,
+                  width: 150,
+                  child: Image.asset("assets/images/ic_launcher.png"),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                controller: password,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Password is required.";
-                  }
-                  return null;
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                decoration: InputDecoration(
-                  label: Text("Password"),
+                TextFormField(
+                  controller: email,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Email is required.";
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: InputDecoration(
+                    label: Text("Email"),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (userForm.currentState!.validate()) {
-                    SignupController.createAccount(
-                        context: context,
-                        email: email.text,
-                        password: password.text);
-                  }
-                },
-                child: Text("Create Account"),
-              ),
-            ],
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: password,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Password is required.";
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: InputDecoration(
+                    label: Text("Password"),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (userForm.currentState!.validate()) {
+                            SignupController.createAccount(
+                                context: context,
+                                email: email.text,
+                                password: password.text);
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.amber,
+                          minimumSize: Size(0, 50),
+                        ),
+                        child: Text(
+                          "Create Account",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

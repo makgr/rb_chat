@@ -42,7 +42,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("Splash Screen"),
+        child: SizedBox(
+          height: 200,
+          width: 200,
+          child: Image.asset("assets/images/ic_launcher.png"),
+        ),
       ),
     );
   }

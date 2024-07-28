@@ -18,84 +18,107 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Login"),
-      ),
       body: Form(
         key: userForm,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              TextFormField(
-                controller: email,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Email is required.";
-                  }
-                  return null;
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                decoration: InputDecoration(
-                  label: Text("Email"),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                controller: password,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Password is required.";
-                  }
-                  return null;
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                decoration: InputDecoration(
-                  label: Text("Password"),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (userForm.currentState!.validate()) {
-                    LoginController.login(
-                        context: context,
-                        email: email.text,
-                        password: password.text);
-                  }
-                },
-                child: Text("Login"),
-              ),
-              Row(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Dont't have an account?"),
                   SizedBox(
-                    width: 10,
+                    height: 150,
+                    width: 150,
+                    child: Image.asset("assets/images/ic_launcher.png"),
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return SignupScreen();
-                      }));
+                  TextFormField(
+                    controller: email,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Email is required.";
+                      }
+                      return null;
                     },
-                    child: Text(
-                      "Sign Up",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.deepPurple),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: InputDecoration(
+                      label: Text("Email"),
                     ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    controller: password,
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Password is required.";
+                      }
+                      return null;
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: InputDecoration(
+                      label: Text("Password"),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (userForm.currentState!.validate()) {
+                              LoginController.login(
+                                  context: context,
+                                  email: email.text,
+                                  password: password.text);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.amber,
+                            minimumSize: Size(0, 50),
+                          ),
+                          child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Text("Dont't have an account?"),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return SignupScreen();
+                          }));
+                        },
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.deepPurple),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),
