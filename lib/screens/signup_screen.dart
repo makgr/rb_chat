@@ -13,6 +13,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController name = TextEditingController();
+  TextEditingController country = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +69,38 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(
                   height: 20,
                 ),
+                TextFormField(
+                  controller: name,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Name is required.";
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: InputDecoration(
+                    label: Text("Name"),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: country,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Country is required.";
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: InputDecoration(
+                    label: Text("Country"),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -76,7 +110,9 @@ class _SignupScreenState extends State<SignupScreen> {
                             SignupController.createAccount(
                                 context: context,
                                 email: email.text,
-                                password: password.text);
+                                password: password.text,
+                                name: name.text,
+                                country: country.text);
                           }
                         },
                         style: ElevatedButton.styleFrom(
