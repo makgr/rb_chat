@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rb_chat/providers/userProvider.dart';
 import 'package:rb_chat/screens/profile_screen.dart';
 import 'package:rb_chat/screens/splash_screen.dart';
 
@@ -14,6 +16,8 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   var user = FirebaseAuth.instance.currentUser;
   var db = FirebaseFirestore.instance;
+
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<Map<String, dynamic>> chatroomList = [];
 
@@ -35,10 +39,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserProvider>(context);
+
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text("Dashboard"),
         centerTitle: true,
+        leading: InkWell(
+          onTap: () {
+            scaffoldKey.currentState!.openDrawer();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: CircleAvatar(
+              radius: 20,
+              child: Text(userProvider.userName[0]),
+            ),
+          ),
+        ),
       ),
       body: ListView.builder(
         itemCount: chatroomList.length,
@@ -46,7 +65,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           String chatRoomName = chatroomList[index]["chatroom_name"] ?? "";
           return ListTile(
             leading: CircleAvatar(
-              child: Text(chatRoomName[0]),
+              backgroundColor: Colors.blueGrey[900],
+              child:
+                  Text(chatRoomName[0], style: TextStyle(color: Colors.white)),
             ),
             title: Text(chatRoomName),
             subtitle: Text(chatroomList[index]["desc"] ?? ""),
@@ -57,6 +78,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: Container(
           child: Column(
             children: [
+              SizedBox(
+                height: 20,
+              ),
+              ListTile(
+                leading: CircleAvatar(
+                  child: Text(userProvider.userName[0]),
+                ),
+                title: Text(
+                  userProvider.userName,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(userProvider.userEmail),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ProfileScreen();
+                  }));
+                },
+              ),
               SizedBox(
                 height: 20,
               ),
