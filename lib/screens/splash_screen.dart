@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rb_chat/providers/userProvider.dart';
 import 'package:rb_chat/screens/dashboard_screen.dart';
 import 'package:rb_chat/screens/login_screen.dart';
 
@@ -27,6 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void openDashboard() {
+    Provider.of<UserProvider>(context, listen: false).getUserDetails();
+
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
       return DashboardScreen();
     }));
