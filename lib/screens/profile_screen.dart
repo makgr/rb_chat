@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rb_chat/providers/userProvider.dart';
+import 'package:rb_chat/screens/edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -38,7 +39,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Text(userProvider.userEmail),
             Text(userProvider.userCountry),
-            ElevatedButton(onPressed: () {}, child: Text("Edit Profile")),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return EditProfileScreen();
+                }));
+              },
+              child: Text("Edit Profile"),
+            ),
           ],
         ),
       ),
