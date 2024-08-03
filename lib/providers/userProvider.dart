@@ -10,10 +10,10 @@ class UserProvider extends ChangeNotifier {
 
   // Map<String, dynamic>? userData = {};
 
-  var authUser = FirebaseAuth.instance.currentUser;
   var db = FirebaseFirestore.instance;
 
   void getUserDetails() {
+    var authUser = FirebaseAuth.instance.currentUser;
     db.collection("users").doc(authUser!.uid).get().then((dataSnapshot) {
       userName = dataSnapshot.data()?["name"] ?? "";
       userEmail = dataSnapshot.data()?["email"] ?? "";

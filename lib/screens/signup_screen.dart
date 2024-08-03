@@ -16,6 +16,8 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController name = TextEditingController();
   TextEditingController country = TextEditingController();
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,24 +107,32 @@ class _SignupScreenState extends State<SignupScreen> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (userForm.currentState!.validate()) {
-                            SignupController.createAccount(
+                            isLoading = true;
+                            setState(() {});
+                            await SignupController.createAccount(
                                 context: context,
                                 email: email.text,
                                 password: password.text,
                                 name: name.text,
                                 country: country.text);
+
+                            isLoading = false;
                           }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.amber,
                           minimumSize: Size(0, 50),
                         ),
-                        child: Text(
-                          "Create Account",
-                          style: TextStyle(color: Colors.black),
-                        ),
+                        child: isLoading
+                            ? CircularProgressIndicator(
+                                color: Colors.black,
+                              )
+                            : Text(
+                                "Create Account",
+                                style: TextStyle(color: Colors.black),
+                              ),
                       ),
                     ),
                   ],

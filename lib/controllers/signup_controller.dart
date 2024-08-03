@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:rb_chat/screens/splash_screen.dart';
 
 import '../screens/dashboard_screen.dart';
 
@@ -33,7 +34,7 @@ class SignupController {
 
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
-        return DashboardScreen();
+        return SplashScreen();
       }), (route) {
         return false;
       });
