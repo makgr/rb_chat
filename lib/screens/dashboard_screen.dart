@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rb_chat/screens/profile_screen.dart';
@@ -12,30 +13,45 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   var user = FirebaseAuth.instance.currentUser;
+  var db = FirebaseFirestore.instance;
+
+  List<Map<String, dynamic>> chatroomList = [];
+
+  void getChatRooms() {
+    db.collection("chatrooms").get().then((dataSnapshot) {
+      for (var singleChatroomData in dataSnapshot.docs) {
+        chatroomList.add(singleChatroomData.data());
+      }
+
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    getChatRooms();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Dashboard"),
+        centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Text("Welcome"),
-          Text((user?.email ?? "").toString()),
-          ElevatedButton(
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (context) {
-                  return SplashScreen();
-                }), (route) {
-                  return false;
-                });
-              },
-              child: Text("Logout")),
-        ],
+      body: ListView.builder(
+        itemCount: chatroomList.length,
+        itemBuilder: (BuildContext context, int index) {
+          String chatRoomName = chatroomList[index]["chatroom_name"] ?? "";
+          return ListTile(
+            leading: CircleAvatar(
+              child: Text(chatRoomName[0]),
+            ),
+            title: Text(chatRoomName),
+            subtitle: Text(chatroomList[index]["desc"] ?? ""),
+          );
+        },
       ),
       drawer: Drawer(
         child: Container(
