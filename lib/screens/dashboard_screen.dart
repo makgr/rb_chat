@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:rb_chat/screens/profile_screen.dart';
 import 'package:rb_chat/screens/splash_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -35,6 +36,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
               child: Text("Logout")),
         ],
+      ),
+      drawer: Drawer(
+        child: Container(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              ListTile(
+                leading: Icon(Icons.people),
+                title: Text("Profile"),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ProfileScreen();
+                  }));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.logout),
+                title: Text("Logout"),
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (context) {
+                    return SplashScreen();
+                  }), (route) {
+                    return false;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
