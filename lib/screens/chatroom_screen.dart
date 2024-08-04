@@ -62,9 +62,14 @@ class _ChatroomScreenState extends State<ChatroomScreen> {
             child: StreamBuilder(
               stream: db
                   .collection("messages")
+                  .where("chatroom_id", isEqualTo: widget.chatroomId)
                   .orderBy("timestamp", descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return Center(child: Text("Some error has occured!"));
+                }
                 var allMessages = snapshot.data?.docs ?? [];
                 return ListView.builder(
                   reverse: true,
