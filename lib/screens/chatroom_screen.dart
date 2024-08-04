@@ -59,8 +59,38 @@ class _ChatroomScreenState extends State<ChatroomScreen> {
       body: Column(
         children: [
           Expanded(
-            child: Container(
-              color: Colors.white,
+            child: StreamBuilder(
+              stream: db
+                  .collection("messages")
+                  .orderBy("timestamp", descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                var allMessages = snapshot.data?.docs ?? [];
+                return ListView.builder(
+                  reverse: true,
+                  itemCount: allMessages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Text(allMessages[index]["text"]),
+                        ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.blueGrey[900],
+                            child: Text(
+                              allMessages[index]["sender_name"][0],
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          title: Text(allMessages[index]["text"]),
+                          subtitle: Text(allMessages[index]["sender_name"],
+                              style: TextStyle(color: Colors.blueGrey[300])),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
             ),
           ),
           Container(
