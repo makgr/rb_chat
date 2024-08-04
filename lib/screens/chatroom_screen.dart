@@ -30,6 +30,7 @@ class _ChatroomScreenState extends State<ChatroomScreen> {
     Map<String, dynamic> messageToSend = {
       "text": messageText.text,
       "sender_name": Provider.of<UserProvider>(context, listen: false).userName,
+      "sender_id": Provider.of<UserProvider>(context, listen: false).userId,
       "chatroom_id": widget.chatroomId,
       "timestamp": FieldValue.serverTimestamp(),
     };
@@ -46,6 +47,48 @@ class _ChatroomScreenState extends State<ChatroomScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(messageSnackBar);
     }
+  }
+
+  Widget singleChatMessage(
+      {required String sender_name,
+      required String text,
+      required String sender_id}) {
+    return Column(
+      // crossAxisAlignment:
+      //     sender_id == Provider.of<UserProvider>(context, listen: false).userId
+      //         ? CrossAxisAlignment.end
+      //         : CrossAxisAlignment.start,
+      children: [
+        sender_id == Provider.of<UserProvider>(context, listen: false).userId
+            ? ListTile(
+                trailing: CircleAvatar(
+                  backgroundColor: Colors.blueGrey[900],
+                  child: Text(
+                    sender_name[0],
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                title: Text(text, textAlign: TextAlign.right),
+                subtitle: Text(
+                  sender_name,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(color: Colors.blueGrey[300]),
+                ),
+              )
+            : ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.blueGrey[900],
+                  child: Text(
+                    sender_name[0],
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                title: Text(text),
+                subtitle: Text(sender_name,
+                    style: TextStyle(color: Colors.blueGrey[300])),
+              ),
+      ],
+    );
   }
 
   @override
@@ -70,29 +113,21 @@ class _ChatroomScreenState extends State<ChatroomScreen> {
                   print(snapshot.error);
                   return Center(child: Text("Some error has occured!"));
                 }
+
                 var allMessages = snapshot.data?.docs ?? [];
+
+                if (allMessages.length < 1) {
+                  return Center(child: Text("No message found!"));
+                }
+
                 return ListView.builder(
                   reverse: true,
                   itemCount: allMessages.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Text(allMessages[index]["text"]),
-                        ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.blueGrey[900],
-                            child: Text(
-                              allMessages[index]["sender_name"][0],
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          title: Text(allMessages[index]["text"]),
-                          subtitle: Text(allMessages[index]["sender_name"],
-                              style: TextStyle(color: Colors.blueGrey[300])),
-                        ),
-                      ],
-                    );
+                    return singleChatMessage(
+                        sender_id: allMessages[index]["sender_id"],
+                        sender_name: allMessages[index]["sender_name"],
+                        text: allMessages[index]["text"]);
                   },
                 );
               },
